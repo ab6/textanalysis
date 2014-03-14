@@ -106,15 +106,15 @@ def generateCandidateKeywordScores(phraseList, wordscore):
 	return keywordcandidates
 
 # Extract list of keywords from file with each keyword on separate line
-def getKeywordList(file):
-    text = open(file, 'r')
-    keywords = []
-    for line in text.readlines():
-        keywords.append(line.strip().lower())
+def getKeywordList(fileName):
+    with open(fileName, 'r') as f:
+        keywords = []
+        for line in f.readlines():
+            keywords.append(line.strip().lower())
     return keywords
 
 # can optionally pass in a file with keywords, one on each line
-def getKeywords(text, keywordFile = ""):
+def getKeywords(text, keywordFile="", onlyFile=False):
     # Split text into sentences
     sentenceList = splitSentences(text)
     #stoppath = "FoxStoplist.txt" #Fox stoplist contains "numbers", so it will not find "natural numbers" like in Table 1.1
@@ -127,7 +127,10 @@ def getKeywords(text, keywordFile = ""):
     # add in keywords from file
     if keywordFile is not "":
         keywords = getKeywordList(keywordFile)
-        phraseList = phraseList + keywords
+        if onlyFile:
+            phraseList = keywords
+        else:
+            phraseList = phraseList + keywords
 
     # calculate individual word scores
     wordscores = calculateWordScores(phraseList)
@@ -138,8 +141,8 @@ def getKeywords(text, keywordFile = ""):
     sortedKeywords = sorted(keywordcandidates.iteritems(), key=operator.itemgetter(1), reverse=True)
 
     totalKeywords = len(sortedKeywords)
-    #return (sortedKeywords)
-    return sortedKeywords[0:(totalKeywords/3)]
+    return (sortedKeywords)
+    #return sortedKeywords[0:(totalKeywords/3)]
 
 # get context information for keywords
 def getContext(text, keywords):
