@@ -97,13 +97,13 @@ def getFRES(numTokens, numSentences, avgSyl, sylCount):
 def getFKGL(numTokens, numSentences, avgSyl, sylCount):
     return (0.39*(numTokens/numSentences)+11.8*(avgSyl/sylCount) - 15.59)
 
-# def getSpellAcc(words):
-#     import enchant
-#     sc = enchant.Dict("en_US")
-#     #Number of misspelled words
-#     count = 0.0
-#     for word in words:
-#         if sc.check(word):
-#             count += 1
-#     return (count/len(words))
+def getSpellAcc(words):
+    import enchant
+    sc = enchant.Dict("en_US")
+    #Number of misspelled words
+    count = 0.0
+    for word in words:
+        if sc.check(word):
+            count += 1
+    return (count/len(words))
 
