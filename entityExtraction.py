@@ -1,8 +1,37 @@
+#organize entities by type
+def org_entities_stan(ents):
+    entDict = dict()
+    for ent, tag in ents:
+        if tag in entDict:
+            entDict[tag].append(ent)
+        else:
+            entDict[tag] = [ent]
+    return entDict
 
-def extract_persons_stanford(sample, stanfordPath):
+def get_model_name(default= True):
+    if not default:
+        return '/classifiers/english.muc.7class.distsim.crf.ser.gz'
+    else:
+        return '/classifiers/english.all.3class.distsim.crf.ser.gz'
+
+def extract_entities_stanford(sample, stanfordPath, model):
+    from nltk.tag.stanford import NERTagger
+    st = NERTagger(stanfordPath + get_model_name(model),
+                   stanfordPath + '/stanford-ner-2014-01-04.jar')
+
+    entity_names = st.tag(sample.split())
+
+    entities = []
+    for entity, tag in entity_names:
+        if cmp(tag, "O") != 0:
+            entities.append([entity, tag])
+
+    return entities
+
+def extract_persons_stanford(sample, stanfordPath, model):
     from nltk.tag.stanford import NERTagger
     import operator
-    st = NERTagger(stanfordPath + '/classifiers/english.all.3class.distsim.crf.ser.gz',
+    st = NERTagger(stanfordPath + get_model_name(model),
                    stanfordPath + '/stanford-ner-2014-01-04.jar')
 
     entity_names = st.tag(sample)
@@ -19,7 +48,7 @@ def extract_persons_stanford(sample, stanfordPath):
     return sorted_occurrences
 
 # From Edmon's agatha.py
-def extract_entities(sample):
+def extract_entities_nltk(sample):
     import nltk
     import operator
     sentences = nltk.sent_tokenize(sample)
@@ -48,7 +77,7 @@ def extract_entity_names(t):
     entity_names = []
     if hasattr(t, 'node') and t.node:
         if t.node == 'NE':
-            entity_names.append(' '.join([child[0] for child in t]))
+            entity_names.append(' '.join([child[0] for child in t]), )
         else:
             for child in t:
                 entity_names.extend(extract_entity_names(child))
