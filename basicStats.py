@@ -1,17 +1,8 @@
 import nltk
-import os
 import re
 
-#Get the names of certain files in a directory
-def getFileNames(directory, matchPattern=""):
-    dirList = os.listdir(directory)
-    filenames = []
-    for fname in dirList:
-        if re.search(matchPattern, fname):
-            filenames.append(fname)
-    return filenames
-
 #Function needed to check the number of syllables
+#Parameters: input word and syllabic dictionary
 def nsyl(word, d):
 	if word.lower() in d.keys():
 		return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
@@ -58,6 +49,7 @@ def splitSentences(text):
 	return sentenceList
 
 #average length of sentences
+#Parameters: list of strings (sentences)
 def getAvgSentLen(sentences):
     avgSent = 0.0
     for sentence in sentences:
@@ -86,17 +78,34 @@ def getSyllableInfo(text):
     return (avgSyl, sylCount, cmplxWords)
 
 #Gunning fog index
+# Parameters:
+#   number of tokens
+#   number of sentences
+#   number of complex words
+#   total number of syllables
 def getGFIndex(numTokens, numSentences, cmplxWords, sylCount):
     return (.4*((numTokens/numSentences) + 100*(cmplxWords/sylCount)))
 
 #Flesch Reading Ease
+# Parameters:
+#   number of tokens
+#   number of sentences
+#   average number of syllables
+#   total number of syllables
 def getFRES(numTokens, numSentences, avgSyl, sylCount):
     return (206.835 - 1.015*(numTokens/numSentences) - 84.6*(avgSyl/sylCount))
 
 #Flesch-Kincaid Grade Level
+# Parameters:
+#   number of tokens
+#   number of sentences
+#   average number of syllables
+#   total number of syllables
 def getFKGL(numTokens, numSentences, avgSyl, sylCount):
     return (0.39*(numTokens/numSentences)+11.8*(avgSyl/sylCount) - 15.59)
 
+# Gets spelling accuracy
+# Parameters: list of words
 def getSpellAcc(words):
     import enchant
     sc = enchant.Dict("en_US")

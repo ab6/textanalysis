@@ -1,6 +1,7 @@
 
 #Get the names of certain files in a directory
-def getFileNames(directory, matchPattern):
+#Parameters: path to directory with files, and pattern to match if getting only certain file names
+def getFileNames(directory, matchPattern=""):
     import os
     import re
     dirList = os.listdir(directory)
@@ -11,6 +12,7 @@ def getFileNames(directory, matchPattern):
     return filenames
 
 #Find all sentences within a given text that contain the specified keyword or phrase
+# Parameters: target keyword and input text string
 def getContext(keyword, text):
     from basicStats import splitSentences
     matches = []
@@ -20,6 +22,8 @@ def getContext(keyword, text):
             matches.append(sentence)
     return matches
 
+# Returns list with all stats
+# Parameters: input text string
 def getAllStats(text):
     import basicStats as bs
     textStats = []
@@ -41,10 +45,13 @@ def getAllStats(text):
     textStats.append(bs.getFKGL(len(tokens), len(sentences), avgSyl, sylCount))
     return textStats
 
+# Returns a list of column headings for stats returned from getAllStats function
 def getAllLabels():
     return ["TotTokens", "UniqueWords", "Unique2Total", "AvgWordLen", "TotSents",
             "AvgSentLen", "AvgSyllables", "GFIndex", "FRES", "FKGL"]
 
+# Given a output file path, headers and data, will write desired csv file
+# Parameters: file path string, list of labels, list of rows (also list)
 def writeCSV(filePath, labels, rows):
     import csv
     with open(filePath, 'w') as output:
