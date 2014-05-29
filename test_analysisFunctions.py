@@ -13,7 +13,9 @@ def setup():
     g.close()
 
 def test_getFileNames_noPattern():
-    assert af.getFileNames(dirname) == ["doc1.txt", "doc2.txt"]
+    fnames=set(af.getFileNames(dirname))
+    control=set(["doc1.txt","doc2.txt"])
+    assert fnames.issubset(control) and fnames.issuperset(control) == True
 
 def test_getFileNames_Pattern():
     assert af.getFileNames(dirname, "2") == ["doc2.txt"]

@@ -44,6 +44,7 @@ def test_getFKGL():
     assert bs.getFKGL(10, 2, 1, 11) == -13.64
 
 #Can only be run on linux (unless you got enchant to install on something else)
-# def test_getSpellAcc(words):
-#     assert bs.getSpellAcc(["Here", "is", "some", "text", "This", "text", "string", "is", "for", "testing"]) == 1
+#def test_getSpellAcc(words):
+def test_getSpellAcc():
+    assert bs.getSpellAcc(["Here", "is", "some", "text", "This", "text", "string", "is", "for", "testing"]) == 1
 
