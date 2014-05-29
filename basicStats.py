@@ -4,27 +4,32 @@ import re
 #Function needed to check the number of syllables
 #Parameters: input word and syllabic dictionary
 def nsyl(word, d):
-	if word.lower() in d.keys():
-		return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
-	else:
-		return [0]
+    if word.lower() in d.keys():
+        return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
+    else:
+        return [0]
+
 
 #total number of words, split on whitespace
 def getWords(text):
     return text.split()
+
 
 #total number or tokens, split using nltk tokenize
 def getTokens(text):
     tokens = nltk.word_tokenize(text)
     return tokens
 
+
 #total number of unique words, split on whitespace
 def getTotalUniqueWords(text):
     return len(set(text.split()))
 
+
 #ratio of total unique words to total words
 def getUniqueTotalRatio(text):
-    return float(getTotalUniqueWords(text))/len(getWords(text))
+    return float(getTotalUniqueWords(text)) / len(getWords(text))
+
 
 #average word length
 def getAvgWordLength(text):
@@ -32,7 +37,8 @@ def getAvgWordLength(text):
     words = getTokens(text)
     for word in words:
         avgWord += len(word)
-    return avgWord/len(words)
+    return avgWord / len(words)
+
 
 #get sentences
 def getSentences(text):
@@ -40,13 +46,17 @@ def getSentences(text):
     sentences = sent_det.tokenize(text.strip())
     return sentences
 
+
 # Utility function to return a list of sentences.
 # @param text The text that must be split in to sentences.
 # From RAKE code
 def splitSentences(text):
-	sentenceDelimiters = re.compile(u'[.!?,;:\t\\-\\"\\(\\)\\\'\u2019\u2013]')
-	sentenceList = sentenceDelimiters.split(text)
-	return sentenceList
+    sentenceDelimiters = re.compile(u'[.!?,;:\t\\-\\"\\(\\)\\\'\u2019\u2013]')
+    sentenceList = sentenceDelimiters.split(text)
+    for sentence in sentenceList:
+        if len(sentence) == 0:
+            sentenceList.remove(sentence)
+    return sentenceList
 
 #average length of sentences
 #Parameters: list of strings (sentences)
@@ -54,7 +64,8 @@ def getAvgSentLen(sentences):
     avgSent = 0.0
     for sentence in sentences:
         avgSent += len(sentence.split())
-    return avgSent/len(sentences)
+    return avgSent / len(sentences)
+
 
 #Returns a triple with the average number of syllables,
 # the total words that were counted, and
@@ -77,6 +88,7 @@ def getSyllableInfo(text):
                 cmplxWords += 1
     return (avgSyl, sylCount, cmplxWords)
 
+
 #Gunning fog index
 # Parameters:
 #   number of tokens
@@ -84,7 +96,8 @@ def getSyllableInfo(text):
 #   number of complex words
 #   total number of syllables
 def getGFIndex(numTokens, numSentences, cmplxWords, sylCount):
-    return (.4*((numTokens/numSentences) + 100*(cmplxWords/sylCount)))
+    return (.4 * ((numTokens / numSentences) + 100 * (cmplxWords / sylCount)))
+
 
 #Flesch Reading Ease
 # Parameters:
@@ -93,7 +106,8 @@ def getGFIndex(numTokens, numSentences, cmplxWords, sylCount):
 #   average number of syllables
 #   total number of syllables
 def getFRES(numTokens, numSentences, avgSyl, sylCount):
-    return (206.835 - 1.015*(numTokens/numSentences) - 84.6*(avgSyl/sylCount))
+    return (206.835 - 1.015 * (numTokens / numSentences) - 84.6 * (avgSyl / sylCount))
+
 
 #Flesch-Kincaid Grade Level
 # Parameters:
@@ -102,17 +116,19 @@ def getFRES(numTokens, numSentences, avgSyl, sylCount):
 #   average number of syllables
 #   total number of syllables
 def getFKGL(numTokens, numSentences, avgSyl, sylCount):
-    return (0.39*(numTokens/numSentences)+11.8*(avgSyl/sylCount) - 15.59)
+    return (0.39 * (numTokens / numSentences) + 11.8 * (avgSyl / sylCount) - 15.59)
+
 
 # Gets spelling accuracy
 # Parameters: list of words
 def getSpellAcc(words):
     import enchant
+
     sc = enchant.Dict("en_US")
     #Number of misspelled words
     count = 0.0
     for word in words:
         if sc.check(word):
             count += 1
-    return (count/len(words))
+    return (count / len(words))
 
