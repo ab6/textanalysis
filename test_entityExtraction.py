@@ -33,6 +33,5 @@ class stanfordExtractionTests():
         assert ee.extract_persons_stanford(text, stanfordPath, '/classifiers/english.all.3class.distsim.crf.ser.gz') \
                == [('Mark', 1)]
 
-
 def test_extract_entities_nltk():
     assert ee.extract_entities_nltk(text) == [('Seattle', 1), ('IBM', 1), ('Mark', 1)]
