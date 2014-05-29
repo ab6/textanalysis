@@ -34,7 +34,7 @@ def extract_persons_stanford(sample, stanfordPath, model):
     st = NERTagger(stanfordPath + get_model_name(model),
                    stanfordPath + '/stanford-ner-2014-01-04.jar')
 
-    entity_names = st.tag(sample)
+    entity_names = st.tag(sample.split())
 
     entity_count = {}
     for entity, tag in entity_names:
