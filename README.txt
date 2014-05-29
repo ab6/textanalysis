@@ -6,3 +6,4 @@ Required libraries:
 
 Notes:
 textanalysis directory needs to be in same parent directory as code you are running.
+Run tests using the command "py.test"
