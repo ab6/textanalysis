@@ -1,7 +1,10 @@
 
-#Get the names of certain files in a directory
-#Parameters: path to directory with files, and pattern to match if getting only certain file names
 def getFileNames(directory, matchPattern=""):
+    """Get the names of certain files in a directory and return list of names
+
+    :param directory - path to directory with files
+    :param matchPattern - pattern to match if getting only certain file names (default "")
+    """
     import os
     import re
     dirList = os.listdir(directory)
@@ -11,20 +14,25 @@ def getFileNames(directory, matchPattern=""):
             filenames.append(fname)
     return filenames
 
-#Find all sentences within a given text that contain the specified keyword or phrase
-# Parameters: target keyword and input text string
 def getContext(keyword, text):
-    from basicStats import splitSentences
+    """Find all sentences within a given text that contain the specified keyword or phrase and return list of sentences
+
+    :param keyword - target keyword
+    :param text - input text string
+    """
+    from basicStats import getSentences
     matches = []
-    sentences = splitSentences(text)
+    sentences = getSentences(text)
     for sentence in sentences:
         if keyword in sentence:
             matches.append(sentence)
     return matches
 
-# Returns list with all stats
-# Parameters: input text string
 def getAllStats(text):
+    """Return list with all stats
+
+    :param text - input text string
+    """
     import basicStats as bs
     textStats = []
     tokens = bs.getTokens(text)
@@ -45,14 +53,19 @@ def getAllStats(text):
     textStats.append(bs.getFKGL(len(tokens), len(sentences), avgSyl, sylCount))
     return textStats
 
-# Returns a list of column headings for stats returned from getAllStats function
 def getAllLabels():
+    """Return a list of column headings for stats returned from getAllStats function"""
     return ["TotTokens", "UniqueWords", "Unique2Total", "AvgWordLen", "TotSents",
             "AvgSentLen", "AvgSyllables", "GFIndex", "FRES", "FKGL"]
 
-# Given a output file path, headers and data, will write desired csv file
-# Parameters: file path string, list of labels, list of rows (also list)
+
 def writeCSV(filePath, labels, rows):
+    """Given a output file path, headers and data, will write desired csv file
+
+    :param filePath - file path string
+    :param labels - list of labels
+    :param rows - list of rows
+    """
     import csv
     with open(filePath, 'w') as output:
         writer = csv.writer(output, delimiter=',')

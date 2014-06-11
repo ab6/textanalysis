@@ -1,5 +1,10 @@
 #organize entities by type
 def org_entities_stan(ents):
+    '''
+    Organize entities by type
+    :param ents:
+    :return:
+    '''
     entDict = dict()
     for ent, tag in ents:
         if tag in entDict:

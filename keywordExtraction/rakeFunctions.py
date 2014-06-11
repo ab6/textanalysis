@@ -45,8 +45,12 @@ def separatewords(text,minWordReturnSize):
 # Utility function to return a list of sentences.
 # @param text The text that must be split in to sentences.
 def splitSentences(text):
-	sentenceDelimiters = re.compile(u'[.!?,;:\t\\-\\"\\(\\)\\\'\u2019\u2013]')
-	sentenceList = sentenceDelimiters.split(text)
+    sentenceDelimiters = re.compile(u'[.!?,;:\t\\-\\"\\(\\)\\\'\u2019\u2013]')
+    sentenceList = sentenceDelimiters.split(text)
+    #Added for loop to remove empty sentences
+    for sentence in sentenceList:
+        if len(sentence) == 0:
+            sentenceList.remove(sentence)
 	return sentenceList
 
 def buildStopwordRegExPattern(pathtostopwordsfile):

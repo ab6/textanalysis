@@ -1,22 +1,32 @@
 import nltk
 import re
 
-#Function needed to check the number of syllables
-#Parameters: input word and syllabic dictionary
+
 def nsyl(word, d):
+    """Function needed to check the number of syllables
+
+    :param word - input word
+    :param d - syllabic dictionary
+    """
     if word.lower() in d.keys():
         return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
     else:
         return [0]
 
 
-#total number of words, split on whitespace
 def getWords(text):
+    """Total number of words, split on whitespace
+
+    :param text - input text string
+    """
     return text.split()
 
 
-#total number or tokens, split using nltk tokenize
 def getTokens(text):
+    """Total number or tokens, split using nltk tokenize
+
+    :param text - input text string
+    """
     tokens = nltk.word_tokenize(text)
     return tokens
 
@@ -46,17 +56,6 @@ def getSentences(text):
     sentences = sent_det.tokenize(text.strip())
     return sentences
 
-
-# Utility function to return a list of sentences.
-# @param text The text that must be split in to sentences.
-# From RAKE code
-def splitSentences(text):
-    sentenceDelimiters = re.compile(u'[.!?,;:\t\\-\\"\\(\\)\\\'\u2019\u2013]')
-    sentenceList = sentenceDelimiters.split(text)
-    for sentence in sentenceList:
-        if len(sentence) == 0:
-            sentenceList.remove(sentence)
-    return sentenceList
 
 #average length of sentences
 #Parameters: list of strings (sentences)
