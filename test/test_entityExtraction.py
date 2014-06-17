@@ -1,5 +1,5 @@
-import entityExtraction as ee
 import os
+from textanalysis.infoExtraction import entityExtraction as ee
 
 text = "Mark works at IBM in Seattle."
 stanfordPath = ""
@@ -21,17 +21,14 @@ def test_stanfordPath():
     except Exception as e:
         print "Must first set stanfordPath variable"
         raise e
-        skiptest(stanfordExtractionTests)
 
-class stanfordExtractionTests():
+def test_extract_entities_stanford():
+    assert ee.extract_entities_stanford(text, stanfordPath, '/classifiers/english.all.3class.distsim.crf.ser.gz') \
+            == [['Mark', 'PERSON'], ['IBM', 'ORGANIZATION'], ['Seattle', 'LOCATION']]
 
-    def test_extract_entities_stanford(self):
-        assert ee.extract_entities_stanford(text, stanfordPath, '/classifiers/english.all.3class.distsim.crf.ser.gz') \
-               == [['Mark', 'PERSON'], ['IBM', 'ORGANIZATION'], ['Seattle', 'LOCATION']]
-
-    def test_extract_persons_stanford(self):
-        assert ee.extract_persons_stanford(text, stanfordPath, '/classifiers/english.all.3class.distsim.crf.ser.gz') \
-               == [('Mark', 1)]
+def test_extract_persons_stanford():
+    assert ee.extract_persons_stanford(text, stanfordPath, '/classifiers/english.all.3class.distsim.crf.ser.gz') \
+            == [('Mark', 1)]
 
 
 def test_extract_entities_nltk():

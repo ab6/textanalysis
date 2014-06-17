@@ -1,4 +1,4 @@
-import basicStats as bs
+from textanalysis.analysis import basicStats as bs
 import nltk
 
 text = "Here is some text. This text string is for testing."
@@ -25,9 +25,6 @@ def test_getAvgWordLength():
 def test_getSentences():
     assert bs.getSentences(text) == ["Here is some text.", "This text string is for testing."]
 
-def test_splitSentences():
-    assert bs.splitSentences(text) == ['Here is some text', ' This text string is for testing']
-
 def test_getAvgSentLen():
     assert bs.getAvgSentLen(text) == 0.8235294117647058
 
@@ -45,6 +42,6 @@ def test_getFKGL():
 
 #Can only be run on linux (unless you got enchant to install on something else)
 #def test_getSpellAcc(words):
-def test_getSpellAcc():
-    assert bs.getSpellAcc(["Here", "is", "some", "text", "This", "text", "string", "is", "for", "testing"]) == 1
+# def test_getSpellAcc():
+#     assert bs.getSpellAcc(["Here", "is", "some", "text", "This", "text", "string", "is", "for", "testing"]) == 1
 

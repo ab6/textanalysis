@@ -1,3 +1,9 @@
+import os
+import re
+import csv
+
+import basicStats as bs
+
 
 def getFileNames(directory, matchPattern=""):
     """Get the names of certain files in a directory and return list of names
@@ -5,8 +11,6 @@ def getFileNames(directory, matchPattern=""):
     :param directory - path to directory with files
     :param matchPattern - pattern to match if getting only certain file names (default "")
     """
-    import os
-    import re
     dirList = os.listdir(directory)
     filenames = []
     for fname in dirList:
@@ -14,26 +18,11 @@ def getFileNames(directory, matchPattern=""):
             filenames.append(fname)
     return filenames
 
-def getContext(keyword, text):
-    """Find all sentences within a given text that contain the specified keyword or phrase and return list of sentences
-
-    :param keyword - target keyword
-    :param text - input text string
-    """
-    from basicStats import getSentences
-    matches = []
-    sentences = getSentences(text)
-    for sentence in sentences:
-        if keyword in sentence:
-            matches.append(sentence)
-    return matches
-
 def getAllStats(text):
     """Return list with all stats
 
     :param text - input text string
     """
-    import basicStats as bs
     textStats = []
     tokens = bs.getTokens(text)
     sentences = bs.getSentences(text)
@@ -59,16 +48,15 @@ def getAllLabels():
             "AvgSentLen", "AvgSyllables", "GFIndex", "FRES", "FKGL"]
 
 
-def writeCSV(filePath, labels, rows):
+def writeCSV(filePath, labels, rows, delimit=","):
     """Given a output file path, headers and data, will write desired csv file
 
     :param filePath - file path string
     :param labels - list of labels
     :param rows - list of rows
     """
-    import csv
     with open(filePath, 'w') as output:
-        writer = csv.writer(output, delimiter=',')
+        writer = csv.writer(output, delimiter = delimit)
         writer.writerow(labels)
         for row in rows:
  		    writer.writerow(row)

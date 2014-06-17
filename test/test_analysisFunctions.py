@@ -1,4 +1,4 @@
-import analysisFunctions as af
+from textanalysis.analysis import analysisFunctions as af
 import os
 import shutil
 
@@ -20,21 +20,18 @@ def test_getFileNames_noPattern():
 def test_getFileNames_Pattern():
     assert af.getFileNames(dirname, "2") == ["doc2.txt"]
 
-def test_getContext():
-    assert af.getContext("string", text) == [" This text string is for testing"]
-
 def test_getAllStats():
     assert af.getAllStats(text)== [11, 9, 0.9, 3.8181818181818183, 2, 5.0, 0.9, 34.0, 125.62000000000002, -3.0199999999999996]
-
 
 def test_getAllLabels():
     assert af.getAllLabels() == ["TotTokens", "UniqueWords", "Unique2Total", "AvgWordLen", "TotSents",
             "AvgSentLen", "AvgSyllables", "GFIndex", "FRES", "FKGL"]
 
-def writeCSV(filePath, labels, rows):
-    af.writeCSV(dirname + "text.csv", ["label1", "label2"], [["row11", "row12"], ["row21", "row22"]])
+def test_writeCSV():
+    af.writeCSV(dirname + "text.csv", ["label1", "label2"], [["row11", "row12"], ["row21", "row22"]], " ")
     test = open(dirname + "text.csv")
     text = test.read()
+    os.remove("test/testtext.csv")
     assert text.split()[2] == "row11"
 
 def teardown():
