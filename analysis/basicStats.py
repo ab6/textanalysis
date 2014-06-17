@@ -3,8 +3,8 @@ import re
 
 
 def nsyl(word, d):
-    """Function needed to check the number of syllables
-
+    """
+    Function needed to check the number of syllables
     :param word - input word
     :param d - syllabic dictionary
     """
@@ -15,16 +15,16 @@ def nsyl(word, d):
 
 
 def getWords(text):
-    """Total number of words, split on whitespace
-
+    """
+    Total number of words, split on whitespace
     :param text - input text string
     """
     return text.split()
 
 
 def getTokens(text):
-    """Total number or tokens, split using nltk tokenize
-
+    """
+    Total number or tokens, split using nltk tokenize
     :param text - input text string
     """
     tokens = nltk.word_tokenize(text)

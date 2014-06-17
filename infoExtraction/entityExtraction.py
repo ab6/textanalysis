@@ -1,3 +1,37 @@
+import keywordExtraction as ke
+
+def identifyPersons(text, entities, persons):
+    '''
+    Given entities already found in text, determine their relation to the child or case.
+    Done by finding relationship keyword in sentence that is closest to entity mention.
+    :param text: target text
+    :param entities: list of Person entities
+    :param persons: list of people relationships
+    :return: List of person, relation tuples
+    '''
+    relations = []
+    for entity in entities:
+        relation = findClosestRelation(text, entity, persons)
+        relations.append([entity, relation])
+    return relations
+
+def findClosestRelation(text, entity, persons):
+    globalMin = ["", 100]
+    contexts = ke.getContext(entity, text)
+    for context in contexts:
+        words = context.lower()
+        localMin = len(words)
+        place = words.find(entity)
+        for person in persons:
+            if person in words:
+                i = words.find(person)
+                if abs(place-i) < localMin and abs(place-i) < globalMin[1]:
+                    globalMin[0] = person
+    if globalMin[0] is not "":
+        return globalMin[0]
+    else:
+        return "unknown"
+
 #organize entities by type
 def org_entities_stan(ents):
     '''

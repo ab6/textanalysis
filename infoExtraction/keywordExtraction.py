@@ -2,7 +2,7 @@ from textanalysis.analysis import analysisFunctions as af
 from textanalysis.analysis import basicStats as bs
 import re
 
-def getKeywords(text, keywords):
+def getKeywordFreqs(text, keywords):
     '''
     Find and count all keywords in the text
     :param text: target text
