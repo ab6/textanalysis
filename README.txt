@@ -2,8 +2,13 @@ Required libraries:
 	enchant
 	pyenchant
 	nltk
-	from nltk.download(): cmudict, punkt, words, & maxent_ne_chunker
+	*from nltk.download(): cmudict, punkt, words, & maxent_ne_chunker
 	pytest (if running unit tests)
+
+*In python console, type;
+>>> import nltk
+>>> nltk.download()
+This will bring up a gui and you can then search for the packages above and download them.
 
 If doing entity extraction, need the stanford tagger downloaded and unzipped.
 http://nlp.stanford.edu/software/CRF-NER.shtml
