@@ -20,7 +20,6 @@ def getFileNames(directory, matchPattern=""):
 
 def getAllStats(text):
     """Return list with all stats
-
     :param text - input text string
     """
     textStats = []
@@ -36,7 +35,10 @@ def getAllStats(text):
     textStats.append(bs.getAvgWordLength(text))
     textStats.append(len(sentences))
     textStats.append(bs.getAvgSentLen(sentences))
-    textStats.append(avgSyl/sylCount)
+    if sylCount > 0:
+        textStats.append(avgSyl/sylCount)
+    else:
+        textStats.append("NA")
     textStats.append(bs.getGFIndex(len(tokens), len(sentences), cmplxWords, sylCount))
     textStats.append(bs.getFRES(len(tokens), len(sentences), avgSyl, sylCount))
     textStats.append(bs.getFKGL(len(tokens), len(sentences), avgSyl, sylCount))
@@ -54,9 +56,10 @@ def writeCSV(filePath, labels, rows, delimit=","):
     :param filePath - file path string
     :param labels - list of labels
     :param rows - list of rows
+    :param delimit - delimiter, default is ','
     """
     with open(filePath, 'w') as output:
         writer = csv.writer(output, delimiter = delimit)
         writer.writerow(labels)
         for row in rows:
- 		    writer.writerow(row)
+            writer.writerow(row)

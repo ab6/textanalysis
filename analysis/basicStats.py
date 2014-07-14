@@ -31,27 +31,47 @@ def getTokens(text):
     return tokens
 
 
-#total number of unique words, split on whitespace
 def getTotalUniqueWords(text):
+    """
+    Total number of unique words, split on whitespace
+    :param text: input text string
+    :return: total number of unique words
+    """
     return len(set(text.split()))
 
 
-#ratio of total unique words to total words
 def getUniqueTotalRatio(text):
-    return float(getTotalUniqueWords(text)) / len(getWords(text))
+    """
+    Ratio of total unique words to total words
+    :param text: input text string
+    :return: ratio
+    """
+    if len(getWords(text)) > 0:
+        return float(getTotalUniqueWords(text)) / len(getWords(text))
+    else: return "NA"
 
 
-#average word length
 def getAvgWordLength(text):
+    """
+    Provides average word length
+    :param text: input text string
+    :return: sum of word lengths divided by total words
+    """
     avgWord = 0.0
     words = getTokens(text)
     for word in words:
         avgWord += len(word)
-    return avgWord / len(words)
+    if len(words) > 0:
+        return avgWord / len(words)
+    else: return "NA"
 
 
-#get sentences
 def getSentences(text):
+    """
+    Using nltk sentence detection, finds all sentences in text
+    :param text: input text string
+    :return: list of sentences
+    """
     sent_det = nltk.data.load('tokenizers/punkt/english.pickle')
     sentences = sent_det.tokenize(text.strip())
     return sentences
@@ -63,7 +83,9 @@ def getAvgSentLen(sentences):
     avgSent = 0.0
     for sentence in sentences:
         avgSent += len(sentence.split())
-    return avgSent / len(sentences)
+    if len(sentences) > 0:
+        return avgSent / len(sentences)
+    else: return "NA"
 
 
 #Returns a triple with the average number of syllables,
@@ -95,7 +117,9 @@ def getSyllableInfo(text):
 #   number of complex words
 #   total number of syllables
 def getGFIndex(numTokens, numSentences, cmplxWords, sylCount):
-    return (.4 * ((numTokens / numSentences) + 100 * (cmplxWords / sylCount)))
+    if numSentences > 0 and sylCount > 0:
+        return (.4 * ((numTokens / numSentences) + 100 * (cmplxWords / sylCount)))
+    else: return "NA"
 
 
 #Flesch Reading Ease
@@ -105,7 +129,9 @@ def getGFIndex(numTokens, numSentences, cmplxWords, sylCount):
 #   average number of syllables
 #   total number of syllables
 def getFRES(numTokens, numSentences, avgSyl, sylCount):
-    return (206.835 - 1.015 * (numTokens / numSentences) - 84.6 * (avgSyl / sylCount))
+    if numSentences > 0 and sylCount > 0:
+        return (206.835 - 1.015 * (numTokens / numSentences) - 84.6 * (avgSyl / sylCount))
+    else: return "NA"
 
 
 #Flesch-Kincaid Grade Level
@@ -115,7 +141,9 @@ def getFRES(numTokens, numSentences, avgSyl, sylCount):
 #   average number of syllables
 #   total number of syllables
 def getFKGL(numTokens, numSentences, avgSyl, sylCount):
-    return (0.39 * (numTokens / numSentences) + 11.8 * (avgSyl / sylCount) - 15.59)
+    if numSentences > 0 and sylCount > 0:
+        return (0.39 * (numTokens / numSentences) + 11.8 * (avgSyl / sylCount) - 15.59)
+    else: return "NA"
 
 
 # Gets spelling accuracy
@@ -129,5 +157,7 @@ def getSpellAcc(words):
     for word in words:
         if sc.check(word):
             count += 1
-    return (count / len(words))
+    if len(words) > 0:
+        return (count / len(words))
+    else: return 0
 
