@@ -19,8 +19,10 @@ def getFileNames(directory, matchPattern=""):
     return filenames
 
 def getAllStats(text):
-    """Return list with all stats
+    """
+    Aggregate function to call all stats functions
     :param text - input text string
+    :return - list of output of all stats functions
     """
     textStats = []
     tokens = bs.getTokens(text)

@@ -1,5 +1,4 @@
 import nltk
-import re
 
 
 def nsyl(word, d):
@@ -7,6 +6,7 @@ def nsyl(word, d):
     Function needed to check the number of syllables
     :param word - input word
     :param d - syllabic dictionary
+    :return - list with possible #'s of syllables
     """
     if word.lower() in d.keys():
         return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
@@ -18,6 +18,7 @@ def getWords(text):
     """
     Total number of words, split on whitespace
     :param text - input text string
+    :return - list of words
     """
     return text.split()
 
@@ -26,6 +27,7 @@ def getTokens(text):
     """
     Total number or tokens, split using nltk tokenize
     :param text - input text string
+    :return - list of tokens
     """
     tokens = nltk.word_tokenize(text)
     return tokens
