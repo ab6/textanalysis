@@ -3,11 +3,11 @@ General utility functions
 """
 
 from ntpath import basename
-from document import Document
+from textanalysis.document import Document
 
-def read_plaintext(path_to_file):
+def read_pipes_old(path_to_file):
     """
-    Reads in a plaintext file containing a single document.
+    Reads in a file with documents separated by
 
     :param path_to_file: The full path to the file containing the document.
     :type path_to_file: str.
@@ -18,10 +18,11 @@ def read_plaintext(path_to_file):
     """
     with open(path_to_file, 'r') as document_file:
         filename = basename(path_to_file)
-        text = document_file.read()
-        return [Document(text, filename=filename)]
+        texts = document_file.read().replace('\n', "").split('|')
+        documents = [Document(text, filename=filename) for text in texts]
+        return documents
 
-def read_pipesv(path_to_file):
+def read_pipes(path_to_file):
     """
     Reads in a file formatted with one document per line, with a name and the
     text seperated by the '|' character.

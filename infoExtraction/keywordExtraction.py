@@ -1,6 +1,7 @@
+import re
+from collections import Counter
 from textanalysis.analysis import analysisFunctions as af
 from textanalysis.analysis import basicStats as bs
-import re
 
 def getKeywordFreqs(text, keywords):
     '''
@@ -9,12 +10,12 @@ def getKeywordFreqs(text, keywords):
     :param keywords: list of keywords
     :return: dict with keywords found and their frequency
     '''
-    keyworddict = {}
+    keywordctr = Counter()
     for keyword in keywords:
         matches = re.findall(keyword, text.lower())
         if matches > -1:
-            keyworddict[keyword] = len(matches)
-    return keyworddict
+            keywordctr[keyword] = len(matches)
+    return keywordctr
 
 def getAllKeywordsLists(keywordDir):
     '''
