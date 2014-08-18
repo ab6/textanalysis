@@ -43,5 +43,5 @@ def read_pipes(path_to_file):
                 raise IOError("Error reading {}:"
                               "Not a pipesv file.".format(filename))
             name, text = line_tuple
-            documents.append(Document(text, name=name, filename=filename))
+            documents.append(Document(' '.join(text.split()).strip(), name=name, filename=filename))
         return documents
