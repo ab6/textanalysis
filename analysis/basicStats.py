@@ -1,3 +1,4 @@
+from __future__ import division
 import nltk
 
 
@@ -49,7 +50,7 @@ def getUniqueTotalRatio(text):
     :return: ratio
     """
     if len(getWords(text)) > 0:
-        return float(getTotalUniqueWords(text)) / len(getWords(text))
+        return getTotalUniqueWords(text) / len(getWords(text))
     else: return "NA"
 
 
