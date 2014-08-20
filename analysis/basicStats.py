@@ -152,6 +152,11 @@ def getFKGL(numTokens, numSentences, avgSyl, sylCount):
 # Gets spelling accuracy
 # Parameters: list of words
 def getSpellAcc(words):
+    '''
+
+    :param words:
+    :return:
+    '''
     import enchant
 
     sc = enchant.Dict("en_US")

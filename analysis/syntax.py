@@ -29,6 +29,8 @@ def tagStatParser(text, parser):
     :param parser: instantiated parser
     :return: parsed text
     """
+    if text.startswith("("):
+        text = text.replace("(", "[")
     return parser.parse(text)
 
 def getSentenceTypes(text, parser):
@@ -36,7 +38,7 @@ def getSentenceTypes(text, parser):
     sents = bs.getSentences(text)
     for sent in sents:
         if len(sent.split()) < 20:
-            parsed = parser.parse(sent)
+            parsed = tagStatParser(sent, parser)
             if hasattr(parsed, 'node'):
                 types[parsed.flatten().node] += 1
     return types

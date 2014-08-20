@@ -39,11 +39,12 @@ def read_pipes(path_to_file):
         documents = list()
         for line in document_file:
             line_tuple = line.strip('\n').split('|')
+
             if len(line_tuple) == 2:
                 name, text = line_tuple
                 documents.append(Document(' '.join(text.split()).strip(),
                                           name=name, filename=filename))
-            elif len(line_tuple == 6):
+            elif len(line_tuple) == 6:
                 caseid, recordid, casetype, isgood, text, comments = line_tuple
                 documents.append(Document(' '.join(text.split()).strip(),
                                           name=name, filename=filename,
@@ -52,6 +53,7 @@ def read_pipes(path_to_file):
                                           isgood=isgood == 'True',
                                           comments=comments))
             else:
+                print line
                 raise IOError("Error reading {}:"
                               "Not a pipesv file.".format(filename))
         return documents
