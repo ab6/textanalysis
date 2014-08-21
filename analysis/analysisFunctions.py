@@ -16,6 +16,8 @@ def getFileNames(directory, matchPattern=""):
     for fname in dirList:
         if re.search(matchPattern, fname):
             filenames.append(fname)
+    if ".DS_Store" in filenames:
+        filenames.remove(".DS_Store")
     return filenames
 
 def getAllStats(text):
