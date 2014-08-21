@@ -41,14 +41,16 @@ def read_pipes(path_to_file):
             line_tuple = line.strip('\n').split('|')
 
             if len(line_tuple) == 2:
-                name, text = line_tuple
+                caseid, text = line_tuple
                 documents.append(Document(' '.join(text.split()).strip(),
-                                          name=name, filename=filename))
+                                          name=caseid, caseid=int(caseid),
+                                          filename=filename))
             elif len(line_tuple) == 6:
                 caseid, recordid, casetype, isgood, text, comments = line_tuple
                 documents.append(Document(' '.join(text.split()).strip(),
-                                          name=name, filename=filename,
-                                          caseid=caseid, recordid=recordid,
+                                          name=caseid, filename=filename,
+                                          caseid=int(caseid),
+                                          recordid=int(recordid),
                                           casetype=int(casetype),
                                           isgood=isgood == 'True',
                                           comments=comments))
