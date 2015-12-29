@@ -39,7 +39,6 @@ def read_pipes(path_to_file):
         documents = list()
         for line in document_file:
             line_tuple = line.strip('\n').split('|')
-
             if len(line_tuple) == 2:
                 recordid, text = line_tuple
                 documents.append(Document(' '.join(text.split()).strip(),

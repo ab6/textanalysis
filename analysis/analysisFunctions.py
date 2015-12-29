@@ -20,16 +20,17 @@ def getFileNames(directory, matchPattern=""):
         filenames.remove(".DS_Store")
     return filenames
 
-def getAllStats(text):
+def getAllStats(text, d):
     """
     Aggregate function to call all stats functions
     :param text - input text string
     :return - list of output of all stats functions
     """
+    import textanalysis.analysis.basicStats as bs
     textStats = []
     tokens = bs.getTokens(text)
     sentences = bs.getSentences(text)
-    sylInfo = bs.getSyllableInfo(text)
+    sylInfo = bs.getSyllableInfo(text, d)
     avgSyl = sylInfo[0]
     sylCount = sylInfo[1]
     cmplxWords = sylInfo[2]

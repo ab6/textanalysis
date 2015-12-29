@@ -94,9 +94,9 @@ def getAvgSentLen(sentences):
 #Returns a triple with the average number of syllables,
 # the total words that were counted, and
 # the total number of complex words
-def getSyllableInfo(text):
+def getSyllableInfo(text, d):
     temp = {}
-    d = nltk.corpus.cmudict.dict()
+    #d = nltk.corpus.cmudict.dict()
     avgSyl = 0.0
     sylCount = 0.0
     cmplxWords = 0.0

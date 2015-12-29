@@ -1,5 +1,7 @@
 import re
 from collections import Counter
+from nltk.corpus import wordnet as wn
+from itertools import product
 from textanalysis.analysis import analysisFunctions as af
 from textanalysis.analysis import basicStats as bs
 
@@ -55,3 +57,20 @@ def getContext(keyword, text):
             matches.append(sentence)
     return matches
 
+def getSynonyms(keyword):
+    newwords = set()
+    kw_syn = wn.synsets(keyword)
+    # take most similar match among synsets
+    word_syn = wn.synsets(keyword)
+    similarities = [x.wup_similarity(y) for x, y in product(kw_syn, word_syn)]
+    best_idx = similarities.index(max(similarities))
+    best_kw = best_idx // len(word_syn)
+    best_word = best_idx % len(word_syn) - 1
+    # see if highest matching synsets have common lemmas
+    # if so, consider this a synonym
+    if not (
+        set(kw_syn[best_kw].lemma_names())
+        .isdisjoint(set(word_syn[best_word].lemma_names()))
+    ):
+        newwords.add((keyword, max(similarities)))
+    return newwords
