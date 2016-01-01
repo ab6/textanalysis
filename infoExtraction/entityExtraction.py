@@ -86,14 +86,14 @@ def extract_persons_stanford(sample, stanfordPath, model):
     sorted_occurrences = sorted(entity_count.iteritems(), reverse=True, key=operator.itemgetter(1))
     return sorted_occurrences
 
-# From Edmon's agatha.py
+
 def extract_entities_nltk(sample):
     import nltk
     import operator
     sentences = nltk.sent_tokenize(sample)
     tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
     tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-    chunked_sentences = nltk.batch_ne_chunk(tagged_sentences, binary=True)
+    chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
 
     entity_names = []
     for tree in chunked_sentences:
@@ -111,11 +111,11 @@ def extract_entities_nltk(sample):
     sorted_occurrences = sorted(entity_count.iteritems(), reverse=True, key=operator.itemgetter(1))
     return sorted_occurrences
 
-# From Edmon's agatha.py
+
 def extract_entity_names(t):
     entity_names = []
-    if hasattr(t, 'node') and t.node:
-        if t.node == 'NE':
+    if hasattr(t, 'label'):
+        if t.label() == 'NE':
             entity_names.append(' '.join([child[0] for child in t]), )
         else:
             for child in t:
